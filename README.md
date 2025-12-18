@@ -76,18 +76,32 @@ See each module's `variables.tf` for all options. Key root variables:
 
 ## Architecture Diagram
 
-> _Insert your diagram here (draw.io, Lucidchart, etc.)_
+![3-Tier Architecture Diagram](Screenshot/Architecture_Diagram.drawio.png)
 
 ---
 
 ## Screenshots
 
-- ALB in AWS Console
-- Successful ICMP (ping) from ALB target or bastion
-- EC2/ASG in AWS Console
-- RDS in AWS Console
-- VPC/Subnets in AWS Console
-- Output from `terraform apply`
+### ALB in AWS Console
+![ALB Screenshot](Screenshot/ALB_shot.png)
+
+### Successful ICMP (ping) Response
+![ICMP Test](Screenshot/ICMP_Test.png)
+
+### EC2 Auto Scaling Group
+![Auto Scaling Group](Screenshot/AutoScaling.png)
+
+### RDS Database Instance
+![RDS Screenshot](Screenshot/RDS_Shot.png)
+
+### VPC and Subnets
+![VPC Screenshot](Screenshot/VPC_shot.png)
+
+### Application Connected to Database
+![App Connected to DB](Screenshot/APP_Connected_To%20_DB.png)
+
+### Terraform Apply Output
+![Terraform Output](Screenshot/Terraform_output.png)
 
 ---
 
