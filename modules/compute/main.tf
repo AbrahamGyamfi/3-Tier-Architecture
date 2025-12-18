@@ -14,13 +14,47 @@ resource "aws_launch_template" "app" {
   vpc_security_group_ids = [var.security_group_id]
   
   user_data = base64encode(<<-EOF
-              #!/bin/bash
-              apt-get update -y
-              apt-get install -y apache2
-              systemctl start apache2
-              systemctl enable apache2
-              echo "<h1>3-Tier App - Instance $(hostname -f)</h1>" > /var/www/html/index.html
-              EOF
+#!/bin/bash
+apt-get update -y
+apt-get install -y nodejs npm git
+
+# Clone the application from GitHub
+git clone https://github.com/AbrahamGyamfi/Todo-APP.git /var/www/todo-app
+cd /var/www/todo-app
+
+# Install dependencies
+npm install
+
+# Set environment variables for the app
+cat > /etc/environment <<ENV
+DB_HOST=${var.db_endpoint}
+DB_USER=${var.db_username}
+DB_PASS=${var.db_password}
+DB_NAME=${var.db_name}
+PORT=80
+ENV
+
+cat > /etc/systemd/system/todo-app.service <<'SVC'
+[Unit]
+Description=Todo App
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/var/www/todo-app
+EnvironmentFile=/etc/environment
+ExecStart=/usr/bin/node server.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+SVC
+
+systemctl daemon-reload
+systemctl enable todo-app
+systemctl start todo-app
+EOF
   )
   
   tag_specifications {

@@ -54,10 +54,14 @@ module "compute" {
   asg_min_size           = 2
   asg_max_size           = 2
   asg_desired_capacity   = 2
+  db_endpoint            = module.database.address
+  db_name                = "mydb"
+  db_username            = var.db_username
+  db_password            = var.db_password
   environment            = local.environment
   project                = local.project
   owner                  = local.owner
-  depends_on             = [module.security, module.networking, module.alb]
+  depends_on             = [module.security, module.networking, module.alb, module.database]
 }
 
 # Database

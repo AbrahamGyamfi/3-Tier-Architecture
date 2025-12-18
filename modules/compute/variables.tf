@@ -37,6 +37,32 @@ variable "target_group_arns" {
   default     = []
 }
 
+# RDS connection variables
+variable "db_endpoint" {
+  description = "RDS endpoint for database connection"
+  type        = string
+  default     = ""
+}
+
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  default     = "mydb"
+}
+
+variable "db_username" {
+  description = "Database username"
+  type        = string
+  default     = "admin"
+}
+
+variable "db_password" {
+  description = "Database password"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
 # Tagging variables
 variable "environment" {
   description = "Environment tag"
