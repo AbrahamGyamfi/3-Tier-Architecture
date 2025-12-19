@@ -15,6 +15,62 @@ All resources are parameterized, tagged, and region-restricted (eu-west-1, eu-ce
 
 ---
 
+## Architecture Diagram
+
+![Architecture Diagram](Screenshot/Architecture_Diagram.drawio.png)
+
+---
+
+## How It Works - Traffic Flow
+
+### **Step-by-Step Traffic Flow**
+
+```
+Internet → Internet Gateway → ALB (Public Subnets) → EC2 App Servers (Private Subnets) → RDS MySQL (Private DB Subnets)
+```
+
+1. **User Request Enters**
+   - External user sends HTTP/HTTPS request
+   - Traffic enters through **Internet Gateway (IGW)**
+
+2. **Presentation Layer (Public)**
+   - **Application Load Balancer (ALB)** in public subnets receives traffic
+   - ALB protected by **Web Security Group** (allows ports 80/443 from internet)
+   - ALB performs health checks and load balancing across AZs
+
+3. **Application Layer (Private)**
+   - ALB forwards traffic to **EC2 instances (t3.micro)** in private app subnets
+   - EC2 protected by **App Security Group** (only accepts traffic from ALB)
+   - Application processes request and queries database
+
+4. **Data Layer (Private)**
+   - EC2 connects to **RDS MySQL** in private DB subnets
+   - RDS protected by **DB Security Group** (only port 3306 from App tier)
+   - Database returns data to application
+
+5. **Response Path**
+   - Data flows back:  RDS → EC2 → ALB → IGW → User
+
+6. **Outbound Internet Access**
+   - Private subnets route outbound traffic through **NAT Gateway**
+   - NAT Gateway in public subnet enables updates/patches
+   - No inbound connections allowed from internet
+
+### **Security Design**
+- **3 isolated layers**:  Public → Private App → Private DB
+- **Defense in depth**: Security groups at each tier allow only necessary traffic
+- **Multi-AZ**:  All components span 2 Availability Zones for high availability
+- **Zero trust**: Each layer only trusts the layer directly above it
+
+### **Key Benefits**
+✅ Scalable and fault-tolerant  
+✅ Database never exposed to internet  
+✅ Application servers in private subnets  
+✅ Load balancing across multiple AZs  
+✅ Secure, production-ready architecture
+
+---
+
 ## Folder Structure
 
 ```
@@ -71,12 +127,6 @@ See each module's `variables.tf` for all options. Key root variables:
 - `alb_dns`: ALB DNS name
 - `rds_endpoint`: RDS endpoint
 - `instance_id`: EC2 instance ID
-
----
-
-## Architecture Diagram
-
-![Architecture Diagram](Screenshot/Architecture_Diagram.drawio.png)
 
 ---
 
