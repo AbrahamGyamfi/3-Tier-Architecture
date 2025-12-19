@@ -132,25 +132,26 @@ See each module's `variables.tf` for all options. Key root variables:
 
 ## Screenshots
 
+
 ### ALB in AWS Console
 ![ALB Screenshot](Screenshot/ALB_shot.png)
 
-### Successful ICMP (ping) from ALB target or bastion
+### Successful ICMP (ping) Response
 ![ICMP Test](Screenshot/ICMP_Test.png)
 
-### EC2/ASG in AWS Console
-![Auto Scaling](Screenshot/AutoScaling.png)
+### EC2 Auto Scaling Group
+![Auto Scaling Group](Screenshot/AutoScaling.png)
+
+### RDS Database Instance
+![RDS Screenshot](Screenshot/RDS_Shot.png)
+
+### VPC and Subnets
+![VPC Screenshot](Screenshot/VPC_shot.png)
 
 ### Application Connected to Database
 ![App Connected to DB](Screenshot/APP_Connected_To%20_DB.png)
 
-### RDS in AWS Console
-![RDS Screenshot](Screenshot/RDS_Shot.png)
-
-### VPC/Subnets in AWS Console
-![VPC Screenshot](Screenshot/VPC_shot.png)
-
-### Output from `terraform apply`
+### Terraform Apply Output
 ![Terraform Output](Screenshot/Terraform_output.png)
 
 ---
