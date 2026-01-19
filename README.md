@@ -314,38 +314,6 @@ Type `yes` when prompted. All resources will be deleted.
 
 ---
 
-## 🤝 Contributing
-
-This is a learning/demonstration project. Feedback and suggestions welcome!
-
----
-
-## 📄 License
-
-Educational/Portfolio Project
-
----
-
-## 👤 Author
-
-Abraham Gyamfi  
-Infrastructure as Code - 3-Tier AWS Architecture
-
----
-
-## 🔗 References
-
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [Terraform AWS Provider Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-- [AWS Secrets Manager Best Practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html)
-- [AWS KMS Best Practices](https://docs.aws.amazon.com/kms/latest/developerguide/best-practices.html)
-![VPC Screenshot](Screenshot/VPC_shot.png)
-
-### Output from `terraform apply`
-![Terraform Output](Screenshot/Terraform_output.png)
-
----
-
 ## Notes
 - All modules are reusable and parameterized
 - Only allowed regions and t3.micro instance types are used
