@@ -69,7 +69,7 @@ IaC/
 ### Step 1: Initialize Terraform
 ```bash
 cd IaC
-terraform init
+tf init
 ```
 
 ### Step 2: Review Variables
@@ -81,19 +81,19 @@ db_username = "admin"  # Database username (password auto-generated)
 
 ### Step 3: Plan Deployment
 ```bash
-terraform plan
+tf plan
 ```
 Expected: ~55 resources to be created
 
 ### Step 4: Deploy Infrastructure
 ```bash
-terraform apply
+tf apply
 ```
 Type `yes` when prompted. Deployment takes **8-12 minutes**.
 
 ### Step 5: Get Outputs
 ```bash
-terraform output
+tf output
 ```
 
 You'll receive:
@@ -220,7 +220,7 @@ Internet → ALB (HTTPS) → EC2 Instances → RDS MySQL (Primary + Read Replica
 ```
 
 ### Detailed Architecture Diagram
-![3-Tier Architecture](../3-TierDiagram_final.jpg)
+![3-Tier Architecture](Screenshot/3-TierDiagram_final.jpg)
 
 For enhanced architecture documentation, see: [ARCHITECTURE_ENHANCED.md](ARCHITECTURE_ENHANCED.md)
 
@@ -231,7 +231,7 @@ For enhanced architecture documentation, see: [ARCHITECTURE_ENHANCED.md](ARCHITE
 ### Test Application
 ```bash
 # Get ALB DNS
-ALB_DNS=$(terraform output -raw alb_dns)
+ALB_DNS=$(tf output -raw alb_dns)
 
 # Test health endpoint
 curl http://$ALB_DNS/health
@@ -281,7 +281,7 @@ aws iam get-role --role-name 3tier-iac-ec2-role
 
 To destroy all resources:
 ```bash
-terraform destroy
+tf destroy
 ```
 
 Type `yes` when prompted. All resources will be deleted.
@@ -311,6 +311,31 @@ Type `yes` when prompted. All resources will be deleted.
 | NAT Gateways | 2 ($64/mo) | 1 ($32/mo) |
 | HTTPS | No | Optional with ACM |
 | Password | Manual | Auto-generated |
+
+---
+
+## 📸 Screenshots
+
+### Application Load Balancer (ALB)
+![ALB Screenshot](Screenshot/ALB_shot.png)
+
+### ICMP Test (Connectivity)
+![ICMP Test](Screenshot/ICMP_Test.png)
+
+### Auto Scaling Group
+![Auto Scaling](Screenshot/AutoScaling.png)
+
+### Application Connected to Database
+![App Connected to DB](Screenshot/APP_Connected_To%20_DB.png)
+
+### RDS MySQL Database
+![RDS Screenshot](Screenshot/RDS_Shot.png)
+
+### VPC and Subnets
+![VPC Screenshot](Screenshot/VPC_shot.png)
+
+### Terraform Apply Output
+![Terraform Output](Screenshot/Terraform_output.png)
 
 ---
 
