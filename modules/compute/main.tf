@@ -12,11 +12,14 @@ resource "aws_launch_template" "app" {
   image_id               = data.aws_ami.ubuntu.id
   instance_type          = "t3.micro"
   vpc_security_group_ids = [var.security_group_id]
+  iam_instance_profile {
+    name = var.iam_instance_profile_name
+  }
   
   user_data = base64encode(<<-EOF
 #!/bin/bash
 apt-get update -y
-apt-get install -y nodejs npm git
+apt-get install -y nodejs npm git awscli jq
 
 # Clone the application from GitHub
 git clone https://github.com/AbrahamGyamfi/Todo-APP.git /var/www/todo-app
@@ -25,11 +28,16 @@ cd /var/www/todo-app
 # Install dependencies
 npm install
 
+# Fetch secrets from AWS Secrets Manager
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id ${var.secret_name} --region ${var.aws_region} --query SecretString --output text)
+DB_USERNAME=$(echo $SECRET_JSON | jq -r '.username')
+DB_PASSWORD=$(echo $SECRET_JSON | jq -r '.password')
+
 # Set environment variables for the app
 cat > /etc/environment <<ENV
 DB_HOST=${var.db_endpoint}
-DB_USER=${var.db_username}
-DB_PASS=${var.db_password}
+DB_USER=$DB_USERNAME
+DB_PASS=$DB_PASSWORD
 DB_NAME=${var.db_name}
 PORT=80
 ENV

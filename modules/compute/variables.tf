@@ -81,3 +81,19 @@ variable "owner" {
   type        = string
   default     = "Ab"
 }
+
+variable "iam_instance_profile_name" {
+  description = "IAM instance profile name for EC2 instances"
+  type        = string
+}
+
+variable "secret_name" {
+  description = "Name of the Secrets Manager secret containing DB credentials"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "AWS region for API calls"
+  type        = string
+  default     = "eu-west-1"
+}

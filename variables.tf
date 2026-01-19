@@ -64,9 +64,8 @@ variable "db_username" {
   default     = "admin"
 }
 
-variable "db_password" {
-  description = "RDS master password"
+variable "certificate_arn" {
+  description = "ARN of ACM certificate for HTTPS (optional - leave empty to use HTTP only)"
   type        = string
-  sensitive   = true
-  default     = "ChangeMe123!" # Change this for production
+  default     = ""
 }

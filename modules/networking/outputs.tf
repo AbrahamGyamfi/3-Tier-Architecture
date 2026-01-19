@@ -1,6 +1,6 @@
 # VPC ID
 output "vpc_id" {
-  value = aws_vpc.Abraham.id
+  value = aws_vpc.main.id
 }
 
 # Public subnet IDs

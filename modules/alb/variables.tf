@@ -44,3 +44,9 @@ variable "owner" {
   type        = string
   default     = "Ab"
 }
+
+variable "certificate_arn" {
+  description = "ARN of ACM certificate for HTTPS listener (optional)"
+  type        = string
+  default     = ""
+}
