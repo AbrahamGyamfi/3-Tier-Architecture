@@ -33,11 +33,6 @@ All resources are parameterized, tagged, and region-restricted (eu-west-1, eu-ce
 
 ---
 
-## Architecture Diagram
-
-![Architecture Diagram](Screenshot/Architecture_Diagram.drawio.png)
-
----
 
 ## How It Works - Traffic Flow
 
@@ -278,7 +273,6 @@ Internet → ALB (HTTPS) → EC2 Instances → RDS MySQL (Primary + Read Replica
 ### Detailed Architecture Diagram
 ![3-Tier Architecture](3-TierDiagram.jpg)
 
-For enhanced architecture documentation, see: [ARCHITECTURE_ENHANCED.md](ARCHITECTURE_ENHANCED.md)
 
 ---
 
@@ -346,11 +340,6 @@ Type `yes` when prompted. All resources will be deleted.
 
 ---
 
-## 📚 Additional Documentation
-
-- [ARCHITECTURE_ENHANCED.md](ARCHITECTURE_ENHANCED.md) - Detailed architecture diagrams with all enhancements
-- [SECURITY_DEPLOYMENT.md](SECURITY_DEPLOYMENT.md) - Security features and deployment guide
-- [CODE_REVIEW.md](CODE_REVIEW.md) - Comprehensive code review and analysis
 
 ## Screenshots
 
