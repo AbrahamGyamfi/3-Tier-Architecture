@@ -346,12 +346,6 @@ Type `yes` when prompted. All resources will be deleted.
 
 ---
 
-## 📚 Additional Documentation
-
-- [ARCHITECTURE_ENHANCED.md](ARCHITECTURE_ENHANCED.md) - Detailed architecture diagrams with all enhancements
-- [SECURITY_DEPLOYMENT.md](SECURITY_DEPLOYMENT.md) - Security features and deployment guide
-- [CODE_REVIEW.md](CODE_REVIEW.md) - Comprehensive code review and analysis
-
 ## Screenshots
 
 
