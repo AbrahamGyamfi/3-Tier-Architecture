@@ -25,3 +25,23 @@ terraform.rc
 
 # Lock file (optional - some teams commit this)
 # .terraform.lock.hcl
+
+# SSH keys and certificates
+*.pem
+*.key
+*.pub
+
+# Environment variables
+.env
+*.env
+
+# Backup files
+*.backup
+*.bak
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Additional log files
+*.log
