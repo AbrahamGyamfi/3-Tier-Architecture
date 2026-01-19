@@ -33,7 +33,63 @@ All resources are parameterized, tagged, and region-restricted (eu-west-1, eu-ce
 
 ---
 
-## 📁 Folder Structure
+## Architecture Diagram
+
+![Architecture Diagram](Screenshot/Architecture_Diagram.drawio.png)
+
+---
+
+## How It Works - Traffic Flow
+
+### **Step-by-Step Traffic Flow**
+
+```
+Internet → Internet Gateway → ALB (Public Subnets) → EC2 App Servers (Private Subnets) → RDS MySQL (Private DB Subnets)
+```
+
+1. **User Request Enters**
+   - External user sends HTTP/HTTPS request
+   - Traffic enters through **Internet Gateway (IGW)**
+
+2. **Presentation Layer (Public)**
+   - **Application Load Balancer (ALB)** in public subnets receives traffic
+   - ALB protected by **Web Security Group** (allows ports 80/443 from internet)
+   - ALB performs health checks and load balancing across AZs
+
+3. **Application Layer (Private)**
+   - ALB forwards traffic to **EC2 instances (t3.micro)** in private app subnets
+   - EC2 protected by **App Security Group** (only accepts traffic from ALB)
+   - Application processes request and queries database
+
+4. **Data Layer (Private)**
+   - EC2 connects to **RDS MySQL** in private DB subnets
+   - RDS protected by **DB Security Group** (only port 3306 from App tier)
+   - Database returns data to application
+
+5. **Response Path**
+   - Data flows back:  RDS → EC2 → ALB → IGW → User
+
+6. **Outbound Internet Access**
+   - Private subnets route outbound traffic through **NAT Gateway**
+   - NAT Gateway in public subnet enables updates/patches
+   - No inbound connections allowed from internet
+
+### **Security Design**
+- **3 isolated layers**:  Public → Private App → Private DB
+- **Defense in depth**: Security groups at each tier allow only necessary traffic
+- **Multi-AZ**:  All components span 2 Availability Zones for high availability
+- **Zero trust**: Each layer only trusts the layer directly above it
+
+### **Key Benefits**
+✅ Scalable and fault-tolerant  
+✅ Database never exposed to internet  
+✅ Application servers in private subnets  
+✅ Load balancing across multiple AZs  
+✅ Secure, production-ready architecture
+
+---
+
+## Folder Structure
 
 ```
 IaC/
@@ -296,50 +352,27 @@ Type `yes` when prompted. All resources will be deleted.
 - [SECURITY_DEPLOYMENT.md](SECURITY_DEPLOYMENT.md) - Security features and deployment guide
 - [CODE_REVIEW.md](CODE_REVIEW.md) - Comprehensive code review and analysis
 
----
+## Screenshots
 
-## 🎯 Key Improvements from Basic Setup
 
-| Feature | Basic | Enhanced |
-|---------|-------|----------|
-| Credentials | Hardcoded | Secrets Manager |
-| Encryption | AWS-managed | Customer-managed KMS |
-| Database | Single-AZ | Multi-AZ |
-| Backups | None | 7-day automated |
-| EC2 Access | SSH keys | SSM Session Manager |
-| IAM Roles | None | Least-privilege |
-| NAT Gateways | 2 ($64/mo) | 1 ($32/mo) |
-| HTTPS | No | Optional with ACM |
-| Password | Manual | Auto-generated |
-
----
-
-## 📸 Screenshots
-
-### Application Load Balancer (ALB)
+### ALB in AWS Console
 ![ALB Screenshot](Screenshot/ALB_shot.png)
 
-### ICMP Test (Connectivity)
+### Successful ICMP (ping) Response
 ![ICMP Test](Screenshot/ICMP_Test.png)
 
-### Auto Scaling Group
-![Auto Scaling](Screenshot/AutoScaling.png)
+### EC2 Auto Scaling Group
+![Auto Scaling Group](Screenshot/AutoScaling.png)
 
-### Application Connected to Database
-![App Connected to DB](Screenshot/APP_Connected_To%20_DB.png)
-
-### RDS MySQL Database
+### RDS Database Instance
 ![RDS Screenshot](Screenshot/RDS_Shot.png)
 
 ### VPC and Subnets
 ![VPC Screenshot](Screenshot/VPC_shot.png)
 
+### Application Connected to Database
+![App Connected to DB](Screenshot/APP_Connected_To%20_DB.png)
+
 ### Terraform Apply Output
 ![Terraform Output](Screenshot/Terraform_output.png)
 
----
-
-## Notes
-- All modules are reusable and parameterized
-- Only allowed regions and t3.micro instance types are used
-- Tagging follows: `Environment`, `Project`, `Owner`
