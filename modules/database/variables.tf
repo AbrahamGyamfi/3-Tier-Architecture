@@ -25,15 +25,13 @@ variable "allocated_storage" {
 }
 
 variable "username" {
-  description = "Master username"
+  description = "Master username (from Secrets Manager)"
   type        = string
-  default     = "admin"
 }
 
 variable "password" {
-  description = "Master password"
+  description = "Master password (from Secrets Manager)"
   type        = string
-  default     = "changeme123"
   sensitive   = true
 }
 
@@ -69,4 +67,9 @@ variable "owner" {
   description = "Owner tag"
   type        = string
   default     = "Ab"
+}
+
+variable "kms_key_id" {
+  description = "KMS key ID for RDS encryption"
+  type        = string
 }
