@@ -18,10 +18,14 @@ resource "random_password" "db_password" {
 
 # Store database credentials in Secrets Manager
 resource "aws_secretsmanager_secret" "db_credentials" {
-  name                    = "${var.project}-db-credentials"
+  name                    = "${var.project}-credentials"
   description             = "Database master credentials for RDS MySQL"
   kms_key_id              = var.kms_key_id
   recovery_window_in_days = 7
+
+  lifecycle {
+    prevent_destroy = true
+  }
 
   tags = merge({
     Name = "${var.project}-db-credentials"

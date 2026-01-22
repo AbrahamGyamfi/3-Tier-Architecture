@@ -28,8 +28,8 @@ resource "aws_lb_target_group" "main" {
     path                = "/health"
     protocol            = "HTTP"
     matcher             = "200"
-    interval            = 30
-    timeout             = 5
+    interval            = 30 #120
+    timeout             = 5 #30
     healthy_threshold   = 2
     unhealthy_threshold = 2
   }
